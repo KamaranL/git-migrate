@@ -57,9 +57,9 @@ function Env {
     } catch { return }
 }
 
-#Set-StrictMode -Version Latest
+Set-StrictMode -Version Latest
 
-if ($PSBoundParameters -and $PSBoundParameters.Verbose) { $VerbosePreference = 'Continue' }
+if ($PSBoundParameters.Verbose) { $VerbosePreference = 'Continue' }
 $DSC = [System.IO.Path]::DirectorySeparatorChar
 $PS = [System.IO.Path]::PathSeparator
 
@@ -72,7 +72,7 @@ if (($Version.Major, $Version.Minor -join '.') -lt $MinimumVersion) {
 
 # move current directory if not already moved
 $TargetDir = $HOME, '.config', 'git' -join $DSC
-$CurrentDir = (Get-Item .).DirectoryName
+$CurrentDir = (Get-Item $PSCommandPath).DirectoryName
 Write-Verbose 'Checking gitconfig...'
 if ($CurrentDir -ne $TargetDir) {
     $CopyItems = 'Copy-Item $CurrentDir\* $TargetDir -Recurse -Force'
