@@ -72,7 +72,7 @@ if (($Version.Major, $Version.Minor -join '.') -lt $MinimumVersion) {
 
 # move current directory if not already moved
 $TargetDir = $HOME, '.config', 'git' -join $DSC
-$CurrentDir = (Get-Item $PWD).DirectoryName
+$CurrentDir = (Get-Item .).DirectoryName
 Write-Verbose 'Checking gitconfig...'
 if ($CurrentDir -ne $TargetDir) {
     $CopyItems = 'Copy-Item $CurrentDir\* $TargetDir -Recurse -Force'

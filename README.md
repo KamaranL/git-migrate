@@ -27,5 +27,5 @@
    2. Windows
 
        ```powershell
-       iex (iwr 'https://raw.githubusercontent.com/KamaranL/git-migrate/main/Install.ps1').Content
+       iwr 'https://raw.githubusercontent.com/KamaranL/git-migrate/main/Install.ps1').Content
        ```
