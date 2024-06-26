@@ -33,10 +33,10 @@ deps=(
     awk
     bc
     cp
-    find
+    env
     git
     realpath
-    xargs
+    rm
 )
 
 for dep in "${deps[@]}"; do
@@ -54,7 +54,7 @@ cry info Identified git version as "'$git_ver'".
     die Minimum version of "'$min_ver'" required.
 
 # move current directory if not already moved
-dst_dir="$HOME/.config/git2"
+dst_dir="$HOME/.config/git"
 src_dir="$(realpath .)"
 [ "$src_dir" != "$dst_dir" ] && {
     [ ! -d "$dst_dir" ] && try mkdir -p "$dst_dir"
@@ -94,6 +94,6 @@ cmd_dir="$dst_dir/commands"
 
 echo Done!
 
-cd "$dst_dir"
+cd $dst_dir
 
 exit 0
