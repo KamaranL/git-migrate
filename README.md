@@ -21,11 +21,13 @@
 
        ```bash
        bash <(curl -sL 'https://raw.githubusercontent.com/KamaranL/git-migrate/main/install.sh')
-
        ```
 
-   2. Windows
+   1. Windows
 
        ```powershell
-       iwr 'https://raw.githubusercontent.com/KamaranL/git-migrate/main/Install.ps1').Content
+       Invoke-WebRequest 'https://raw.githubusercontent.com/KamaranL/git-migrate/main/Install.ps1' -OutFile Install.ps1
+       ./Install.ps1 -Verbose
        ```
+
+2. Clean up old directory structure (if necessary)

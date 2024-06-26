@@ -59,7 +59,9 @@ function Env {
 
 Set-StrictMode -Version Latest
 
-if ($PSBoundParameters.Verbose) { $VerbosePreference = 'Continue' }
+if ($PSBoundParameters | Get-Member Verbose) {
+    if ($PSBoundParameters.Verbose) { $VerbosePreference = 'Continue' }
+}
 $DSC = [System.IO.Path]::DirectorySeparatorChar
 $PS = [System.IO.Path]::PathSeparator
 
@@ -75,7 +77,8 @@ $TargetDir = $HOME, '.config', 'git' -join $DSC
 $CurrentDir = (Get-Item $PSCommandPath).DirectoryName
 Write-Verbose 'Checking gitconfig...'
 if ($CurrentDir -ne $TargetDir) {
-    $CopyItems = 'Copy-Item $CurrentDir\* $TargetDir -Recurse -Force -Exclude $PSCommandPath'
+    $Source = $PSCommandPath
+    $CopyItems = 'Copy-Item $CurrentDir\* $TargetDir -Recurse -Force -Exclude (Get-Item $Source).Name'
 
     if (Test-Path $TargetDir -PathType Container) {
         $CopyItems += ' -Confirm'
@@ -84,7 +87,9 @@ if ($CurrentDir -ne $TargetDir) {
         $null = New-Item $TargetDir -ItemType Directory -Force
     }
 
-    if ($PSBoundParameters.Verbose) { $CopyItems += ' -Verbose' }
+    if ($PSBoundParameters | Get-Member Verbose) {
+        if ($PSBoundParameters.Verbose) { $CopyItems += ' -Verbose' }
+    }
 
     Invoke-Command -ScriptBlock ([ScriptBlock]::Create($CopyItems))
 }
@@ -111,8 +116,8 @@ if ((Env 'Path') -notcontains $CommandsDir) {
     Env 'Path' $Path
 }
 
-'Done!'
-
 Set-Location $TargetDir
+
+"`"$CurrentDir`" can now be removed."
 
 exit 0
