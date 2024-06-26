@@ -92,7 +92,7 @@ cmd_dir="$dst_dir/commands"
     cry info Added commands to \$PATH. ||
     cry error Failed to add commands to \$PATH.
 
-cd "${dst_dir/\~/"$HOME"}"
+eval "cd $dst_dir"
 
 echo "'$src_dir'" can now be removed.
 
