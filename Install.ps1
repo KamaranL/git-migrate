@@ -75,7 +75,7 @@ $TargetDir = $HOME, '.config', 'git' -join $DSC
 $CurrentDir = (Get-Item $PSCommandPath).DirectoryName
 Write-Verbose 'Checking gitconfig...'
 if ($CurrentDir -ne $TargetDir) {
-    $CopyItems = 'Copy-Item $CurrentDir\* $TargetDir -Recurse -Force'
+    $CopyItems = 'Copy-Item $CurrentDir\* $TargetDir -Recurse -Force -Exclude $PSCommandPath'
 
     if (Test-Path $TargetDir -PathType Container) {
         $CopyItems += ' -Confirm'
